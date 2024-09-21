@@ -9,6 +9,9 @@ import tkinter as tk
 from customtkinter import ThemeManager
 import os
 import sys
+from pystray import MenuItem as item
+import pystray
+from PIL import Image
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -26,6 +29,9 @@ class ErwinGUI(ctk.CTk):
 
         self.title("Erwin Submission GUI")
         self.geometry("800x600")
+
+        self.icon = None  # Initialize icon as None
+        self.protocol('WM_DELETE_WINDOW', self.withdraw_window)
 
         icon_path = resource_path("erwin.ico")
         try:
@@ -284,7 +290,31 @@ class ErwinGUI(ctk.CTk):
             self.log_message(f"Loaded {len(self.proxies)} proxy(ies) from storage.")
         except FileNotFoundError:
             pass
+    
+    def setup_tray(self):
+        if self.icon is None:
+            image = Image.open("erwin.ico")
+            menu = (item('Show', self.show_window), item('Exit', self.quit_window))
+            self.icon = pystray.Icon("name", image, "Erwin Submission GUI", menu)
+            self.icon.run_detached()
+
+    def show_window(self):
+        self.deiconify()
+        if self.icon:
+            self.icon.stop()
+            self.icon = None
+
+    def quit_window(self):
+        if self.icon:
+            self.icon.stop()
+        self.quit()
+
+    def withdraw_window(self):
+        self.withdraw()
+        self.setup_tray()
 
 if __name__ == "__main__":
     app = ErwinGUI()
     app.mainloop()
+    if hasattr(app, 'icon') and app.icon:
+        app.icon.stop()
