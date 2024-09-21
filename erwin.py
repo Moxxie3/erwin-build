@@ -210,7 +210,7 @@ class ErwinGUI(ctk.CTk):
                     headers['X-Forwarded-For'] = proxy
 
                 response = requests.post(
-                    "https://devnet-api.erwin.lol/submit_guesses",
+                    "https://api.erwin.lol/submit_guesses",
                     headers=headers,
                     json=passwords,
                     timeout=30
