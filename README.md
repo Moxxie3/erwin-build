@@ -1,6 +1,6 @@
 # Erwin GUI Installer
 
-This README provides instructions on how to install the Erwin Submission GUI using the provided `install.py` script.
+This README provides instructions on how to install the Erwin GUI using the provided `install.py` script.
 
 ## Prerequisites
 
