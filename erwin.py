@@ -12,6 +12,7 @@ import sys
 from pystray import MenuItem as item
 import pystray
 from PIL import Image
+from pybip39 import Mnemonic
 
 def resource_path(relative_path):
     try:
@@ -49,7 +50,6 @@ class ErwinGUI(ctk.CTk):
         self.create_widgets()
         self.load_api_keys()
         self.load_proxies()
-        self.fetch_wordlist()
 
     def create_widgets(self):
         api_frame = ctk.CTkFrame(self)
@@ -193,7 +193,7 @@ class ErwinGUI(ctk.CTk):
         attempt_count = 0
         while not self.stop_requested:
             attempt_count += 1
-            passwords = [self.generate_mnemonic_phrase() for _ in range(50)]
+            passwords = [Mnemonic().phrase for _ in range(50)]
             proxy = random.choice(self.proxies) if self.use_proxies and self.proxies else None
             
             self.log_message(f"🔑 API Key: {api_key[:10]}... | Submission: {attempt_count} | Sleep: {sleep_time}s{' | Proxy: ' + proxy if proxy else ''}")
@@ -210,7 +210,7 @@ class ErwinGUI(ctk.CTk):
                     headers['X-Forwarded-For'] = proxy
 
                 response = requests.post(
-                    "https://api.erwin.lol/submit_guesses",
+                    "https://devnet-api.erwin.lol/submit_guesses",
                     headers=headers,
                     json=passwords,
                     timeout=30
@@ -232,19 +232,6 @@ class ErwinGUI(ctk.CTk):
 
             self.log_message(f"💤 Sleeping for {sleep_time}s | API Key: {api_key[:10]}...")
             time.sleep(sleep_time)
-
-    def generate_mnemonic_phrase(self):
-        indices = [random.randint(0, len(self.wordlist) - 1) for _ in range(12)]
-        return ' '.join([self.wordlist[i] for i in indices])
-
-    def fetch_wordlist(self):
-        url = 'https://raw.githubusercontent.com/bitcoin/bips/master/bip-0039/english.txt'
-        try:
-            response = requests.get(url)
-            response.raise_for_status()
-            self.wordlist = response.text.split()
-        except Exception as e:
-            self.log_message(f"Error fetching wordlist: {str(e)}")
 
     def log_message(self, message):
         self.logs_text.insert(ctk.END, f"{time.strftime('%Y-%m-%d %H:%M:%S')} - {message}\n")
