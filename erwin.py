@@ -193,8 +193,8 @@ class ErwinGUI(ctk.CTk):
             passwords = [self.generate_mnemonic_phrase() for _ in range(50)]
             proxy = random.choice(self.proxies) if self.use_proxies and self.proxies else None
             
-            self.log_message(f"🔑️ API Key: {api_key[:10]}... | Submission: {attempt_count} | Sleep: {sleep_time}s{' | Proxy: ' + proxy if proxy else ''}")
-            self.log_message(f"➡️ Submitting {len(passwords)} guesses to oracle")
+            self.log_message(f"🔑 API Key: {api_key[:10]}... | Submission: {attempt_count} | Sleep: {sleep_time}s{' | Proxy: ' + proxy if proxy else ''}")
+            self.log_message(f"➡ Submitting {len(passwords)} guesses to oracle")
 
             start_time = time.time()
             try:
