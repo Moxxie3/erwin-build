@@ -7,6 +7,18 @@ import threading
 from tkinter import filedialog, messagebox
 import tkinter as tk
 from customtkinter import ThemeManager
+import os
+import sys
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 
 class ErwinGUI(ctk.CTk):
     def __init__(self):
@@ -14,6 +26,12 @@ class ErwinGUI(ctk.CTk):
 
         self.title("Erwin Submission GUI")
         self.geometry("800x600")
+
+        icon_path = resource_path("erwin.ico")
+        try:
+            self.iconbitmap(icon_path)
+        except Exception as e:
+            print(f"Error setting icon: {e}")
 
         ctk.set_appearance_mode("System")
         ctk.set_default_color_theme("blue")
@@ -234,9 +252,13 @@ class ErwinGUI(ctk.CTk):
         logs = self.logs_text.get("1.0", ctk.END)
         file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text Files", "*.txt")])
         if file_path:
-            with open(file_path, 'w') as file:
-                file.write(logs)
-            self.log_message(f"Logs downloaded to {file_path}")
+            try:
+                with open(file_path, 'w', encoding='utf-8') as file:
+                    file.write(logs)
+                self.log_message(f"Logs downloaded to {file_path}")
+            except Exception as e:
+                self.log_message(f"Error saving logs: {str(e)}")
+                messagebox.showerror("Error", f"Failed to save logs: {str(e)}")
 
     def save_api_keys(self):
         with open('api_keys.json', 'w') as file:
