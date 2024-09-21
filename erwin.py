@@ -14,14 +14,11 @@ import pystray
 from PIL import Image
 
 def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")
-
     return os.path.join(base_path, relative_path)
-
 
 class ErwinGUI(ctk.CTk):
     def __init__(self):
@@ -293,10 +290,14 @@ class ErwinGUI(ctk.CTk):
     
     def setup_tray(self):
         if self.icon is None:
-            image = Image.open("erwin.ico")
-            menu = (item('Show', self.show_window), item('Exit', self.quit_window))
-            self.icon = pystray.Icon("name", image, "Erwin Submission GUI", menu)
-            self.icon.run_detached()
+            try:
+                icon_path = resource_path("erwin.ico")
+                image = Image.open(icon_path)
+                menu = (item('Show', self.show_window), item('Exit', self.quit_window))
+                self.icon = pystray.Icon("name", image, "Erwin Submission GUI", menu)
+                self.icon.run_detached()
+            except Exception as e:
+                print(f"Error setting up tray icon: {e}")
 
     def show_window(self):
         self.deiconify()
