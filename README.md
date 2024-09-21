@@ -12,7 +12,7 @@ This README provides instructions on how to install the Erwin Submission GUI usi
 2. Download the latest version of Python for Windows.
 3. Run the installer. Make sure to check the box that says "Add Python to PATH" during installation.
 4. To verify the installation, open Command Prompt and type:
-python --version
+`python --version`
 
 This should display the installed Python version.
 
@@ -24,12 +24,12 @@ This should display the installed Python version.
 - Press `Win + R`, type `cmd`, and press Enter.
 
 3. Navigate to the extracted folder:
-cd path\to\erwin-build-main
+`cd path\to\erwin-build-main`
 
 Replace `path\to` with the actual path where you extracted the zip file.
 
 4. Run the installation script:
-python install.py
+`python install.py`
 
 5. Follow any on-screen prompts to complete the installation.
 
