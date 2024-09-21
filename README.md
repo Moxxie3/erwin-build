@@ -34,10 +34,3 @@ Replace `path\to` with the actual path where you extracted the zip file.
 5. Follow any on-screen prompts to complete the installation.
 
 6. Once the installation is complete, you should find the Erwin Submission GUI executable in the specified installation directory.
-
-## Troubleshooting
-
-- If you encounter a "python is not recognized" error, make sure Python is correctly added to your system's PATH.
-- If you face any permission issues, try running Command Prompt as an administrator.
-
-For any additional help or issues, please contact support or refer to the documentation.
