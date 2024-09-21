@@ -22,6 +22,19 @@ def build_executable():
         f"--icon={icon_path}",
         f"--distpath={output_dir}",
         "--onedir",
+        "--hidden-import=customtkinter",
+        "--hidden-import=requests",
+        "--hidden-import=json",
+        "--hidden-import=random",
+        "--hidden-import=time",
+        "--hidden-import=threading",
+        "--hidden-import=tkinter",
+        "--hidden-import=tkinter.filedialog",
+        "--hidden-import=tkinter.messagebox",
+        "--hidden-import=pystray",
+        "--hidden-import=PIL",
+        "--hidden-import=PIL.Image",
+        "--hidden-import=pybip39",
         script_path
     ]
 
