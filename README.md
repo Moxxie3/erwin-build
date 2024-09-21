@@ -31,4 +31,4 @@ Replace `path\to` with the actual path where you extracted the zip file.
 4. Run the installation script:
 `python install.py`
 
-5. Once the installation is complete, you should find the Erwin Submission GUI executable in the Desktop directory.
+5. Once the installation is complete, you should find the Erwin GUI executable in the Desktop directory.
