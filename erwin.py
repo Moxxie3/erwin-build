@@ -28,7 +28,7 @@ class ErwinGUI(ctk.CTk):
         self.title("Erwin Submission GUI")
         self.geometry("800x600")
 
-        self.icon = None  # Initialize icon as None
+        self.icon = None
         self.protocol('WM_DELETE_WINDOW', self.withdraw_window)
 
         icon_path = resource_path("erwin.ico")
