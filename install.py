@@ -5,7 +5,7 @@ def build_executable():
     current_dir = os.path.dirname(os.path.realpath(__file__))
 
     icon_path = os.path.join(current_dir, "erwin.ico")
-    script_path = os.path.join(current_dir, "Erwin.py")
+    script_path = os.path.join(current_dir, "erwin.py")
     output_dir = os.path.join(os.path.expanduser("~"), "Desktop")
 
     if not os.path.exists(icon_path):
