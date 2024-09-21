@@ -1,6 +1,5 @@
 import os
 import subprocess
-import shutil
 
 def build_executable():
     current_dir = os.path.dirname(os.path.realpath(__file__))
