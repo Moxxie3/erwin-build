@@ -218,19 +218,19 @@ class ErwinGUI(ctk.CTk):
 
                 if response.status_code == 202:
                     self.log_message(f"✅ Guesses accepted | API Key: {api_key[:10]}... | Time: {request_time:.2f}s")
-                    sleep_time = max(60, sleep_time - 1)
+                    sleep_time = 60
                 elif response.status_code == 404:
                     self.log_message(f"❌ Guesses rejected | API Key: {api_key[:10]}... | Status: {response.status_code} | Response: {response.text} | Time: {request_time:.2f}s")
-                    sleep_time = 5
+                    sleep_time = 10
                 elif response.status_code == 429:
                     self.log_message(f"❌ Guesses rejected | API Key: {api_key[:10]}... | Status: {response.status_code} | Response: {response.text} | Time: {request_time:.2f}s")
-                    sleep_time = 5
+                    sleep_time = 10
                 else:
                     self.log_message(f"❌ Guesses rejected | API Key: {api_key[:10]}... | Status: {response.status_code} | Response: {response.text} | Time: {request_time:.2f}s")
-                    sleep_time += 5
+                    sleep_time = 10
             except Exception as error:
                 self.log_message(f"⚠️ Request error | API Key: {api_key[:10]}... | Error: {str(error)}")
-                sleep_time = 5
+                sleep_time = 10
 
             if self.stop_requested:
                 break
