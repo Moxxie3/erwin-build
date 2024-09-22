@@ -196,8 +196,7 @@ class ErwinGUI(ctk.CTk):
             passwords = [Mnemonic().phrase for _ in range(50)]
             proxy = random.choice(self.proxies) if self.use_proxies and self.proxies else None
             
-            self.log_message(f"🔑 API Key: {api_key[:10]}... | Submission: {attempt_count} | Sleep: {sleep_time}s{' | Proxy: ' + proxy if proxy else ''}")
-            self.log_message(f"➡ Submitting {len(passwords)} guesses to oracle")
+            self.log_message(f"🔑 API Key: {api_key[:10]}... | Submission: {attempt_count} | Sleep: {sleep_time}s{' | Proxy: ' + proxy if proxy else ''}\n➡ Submitting {len(passwords)} guesses to oracle")
 
             start_time = time.time()
             try:
@@ -219,13 +218,19 @@ class ErwinGUI(ctk.CTk):
 
                 if response.status_code == 202:
                     self.log_message(f"✅ Guesses accepted | API Key: {api_key[:10]}... | Time: {request_time:.2f}s")
-                    sleep_time = max(1, sleep_time - 1)
+                    sleep_time = max(60, sleep_time - 1)
+                elif response.status_code == 404:
+                    self.log_message(f"❌ Guesses rejected | API Key: {api_key[:10]}... | Status: {response.status_code} | Response: {response.text} | Time: {request_time:.2f}s")
+                    sleep_time = 5
+                elif response.status_code == 429:
+                    self.log_message(f"❌ Guesses rejected | API Key: {api_key[:10]}... | Status: {response.status_code} | Response: {response.text} | Time: {request_time:.2f}s")
+                    sleep_time = 5
                 else:
                     self.log_message(f"❌ Guesses rejected | API Key: {api_key[:10]}... | Status: {response.status_code} | Response: {response.text} | Time: {request_time:.2f}s")
-                    sleep_time += 10
+                    sleep_time += 5
             except Exception as error:
                 self.log_message(f"⚠️ Request error | API Key: {api_key[:10]}... | Error: {str(error)}")
-                sleep_time += 10
+                sleep_time = 5
 
             if self.stop_requested:
                 break
