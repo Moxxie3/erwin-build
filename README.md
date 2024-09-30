@@ -2,6 +2,8 @@
 
 This README provides instructions on how to install the Erwin Submission GUI using the provided `install.py` script.
 
+forked by Moxxie adding more here soon to what i want to do and stuffs
+
 ## Prerequisites
 
 1. Python 3.7 or higher
